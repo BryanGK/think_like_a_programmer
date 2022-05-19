@@ -26,25 +26,47 @@ void triangle(void) {
   }
 };
 
-void checksum() {
-
+int doubleDigitValue(int digit) {
+  const int doubledDigit = digit * 2;
+  if (doubledDigit >= 10)
+    return 1 + doubledDigit % 10;
+  return doubledDigit;
 };
 
-int doubleDigitValue(int digit) {
-  int doubledDigit = digit * 2;
-  int sum;
-  if (doubledDigit >= 10)
-    sum = 1 + doubledDigit % 10;
-  else
-    sum = doubledDigit;
-  return sum;
+void checksum() {
+  char digit;
+  int position = 1;
+  int oddChecksum = 0;
+  int evenChecksum = 0;
+  cout << "Enter a number to be CHECKED: ";
+  digit = cin.get();
+  while (digit != 10) {
+    if (position % 2 == 0) {
+      evenChecksum += digit - '0';
+      oddChecksum += doubleDigitValue(digit);
+    } else {
+        evenChecksum += doubleDigitValue(digit);
+        oddChecksum += digit - '0';
+      }
+    
+    digit = cin.get();
+    position++;
+  }
+  int checksum;
+  if ((position -1) % 2 == 0)
+    checksum = evenChecksum;
+    else
+      checksum = oddChecksum;
+    cout << "Checksum is " << checksum << ". \n";
+    if (checksum % 10 == 0)
+    {
+      cout << "Checksum is divisible by 10. Valid \n";
+  } else {
+    cout << "Checksum is NOT divisible by 10. INVALID \n";
+  }
 };
 
 int main() {
-  char digit;
-  cout << "Enter a on-digit number: ";
-  digit = cin.get();
-  int sum = digit - '0';
-  cout << "Is the sum of the digits " << sum << "? \n";
+  checksum();
   return 0;
 }
